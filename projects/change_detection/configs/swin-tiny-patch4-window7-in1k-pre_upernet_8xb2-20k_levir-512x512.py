@@ -2,7 +2,7 @@ _base_ = [
     '_base_/datasets/levir_cd.py',
     '../../../configs/_base_/models/upernet_swin.py',
     '../../../configs/_base_/default_runtime.py',
-    '../../../configs/_base_/schedules/schedule_160k.py'
+    '../../../configs/_base_/schedules/schedule_20k.py'
 ]
 custom_imports = dict(imports=[
     'projects.change_detection.datasets',
@@ -34,9 +34,9 @@ model = dict(
 # in backbone
 optim_wrapper = dict(
     _delete_=True,
-    type='OptimWrapper',
+    type='AmpOptimWrapper',
     optimizer=dict(
-        type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01),
+        type='AdamW', lr=0.000015, betas=(0.9, 0.999), weight_decay=0.01),
     paramwise_cfg=dict(
         custom_keys={
             'absolute_pos_embed': dict(decay_mult=0.),
@@ -45,19 +45,13 @@ optim_wrapper = dict(
         }))
 
 param_scheduler = [
-    dict(
-        type='LinearLR', start_factor=1e-6, by_epoch=False, begin=0, end=1500),
+    dict(type='LinearLR', start_factor=1e-6, by_epoch=False, begin=0, end=192),
     dict(
         type='PolyLR',
         eta_min=0.0,
         power=1.0,
-        begin=1500,
-        end=160000,
+        begin=192,
+        end=20000,
         by_epoch=False,
     )
 ]
-
-# By default, models are trained on 8 GPUs with 2 images per GPU
-train_dataloader = dict(batch_size=2)
-val_dataloader = dict(batch_size=1)
-test_dataloader = val_dataloader
