@@ -35,8 +35,12 @@ class ChangeDetector(EncoderDecoder):
 
     def extract_feat(self, inputs: Tensor) -> List[Tensor]:
         """Extract features from images."""
-        pair = []
-        for x in torch.chunk(inputs, 2, dim=1):
-            x = super().extract_feat(x)
-            pair.append(x)
-        return [torch.cat((x1, x2), dim=1) for x1, x2 in zip(*pair)]
+        xs = super().extract_feat(
+            # Convert (b, c, h, w) to (2*b, c/2, h, w)
+            torch.cat(torch.chunk(inputs, 2, dim=1), dim=0))
+
+        outs = list()
+        for x in xs:
+            # Convert (2*b, c', h', w') to (b, c'*2, h', w')
+            outs.append(torch.cat(torch.chunk(x, 2, dim=0), dim=1))
+        return outs
