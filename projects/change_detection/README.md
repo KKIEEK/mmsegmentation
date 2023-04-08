@@ -1,26 +1,12 @@
-# Dummy ResNet Wrapper
-
-> A README.md template for releasing a project.
->
-> All the fields in this README are **mandatory** for others to understand what you have achieved in this implementation.
-> Please read our [Projects FAQ](../faq.md) if you still feel unclear about the requirements, or raise an [issue](https://github.com/open-mmlab/mmsegmentation/issues) to us!
+# Change Detection based on MMSegmentation
 
 ## Description
 
-> Share any information you would like others to know. For example:
->
-> Author: @xxx.
->
-> This is an implementation of \[XXX\].
+Author： @KKIEEK
 
-Author： @xxx.
-
-This project implements a dummy ResNet wrapper, which literally does nothing new but prints "hello world" during initialization.
+This project implements a baseline for the bi-temporal change detection task, which is simply concatenates intermediate features.
 
 ## Usage
-
-> For a typical model, this section should contain the commands for training and testing.
-> You are also suggested to dump your environment specification to env.yml by `conda env export > env.yml`.
 
 ### Prerequisites
 
@@ -29,49 +15,48 @@ This project implements a dummy ResNet wrapper, which literally does nothing new
 - [MIM](https://github.com/open-mmlab/mim) v0.33 or higher
 - [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) v1.0.0rc2 or higher
 
-All the commands below rely on the correct configuration of `PYTHONPATH`, which should point to the project's directory so that Python can locate the module files. In `example_project/` root directory, run the following line to add the current directory to `PYTHONPATH`:
+### Preparing dataset
+
+You can download dataset for change detection in [this link](https://justchenhao.github.io/LEVIR).
 
 ```shell
-export PYTHONPATH=`pwd`:$PYTHONPATH
+tree data
+
+data
+└── levir
+    ├── train
+    │   ├── A
+    │   │   ├── xxx{img_suffix}
+    │   │   ├── yyy{img_suffix}
+    │   │   └── zzz{img_suffix}
+    │   ├── B
+    │   │   ├── xxx{img_suffix}
+    │   │   ├── yyy{img_suffix}
+    │   │   └── zzz{img_suffix}
+    │   ├── label
+    │   │   ├── xxx{seg_map_suffix}
+    │   │   ├── yyy{seg_map_suffix}
+    │   │   └── zzz{seg_map_suffix}
+    ├── val
 ```
 
 ### Training commands
 
 ```shell
-mim train mmsegmentation configs/fcn_dummy-r50-d8_4xb2-40k_cityscapes-512x1024.py --work-dir work_dirs/dummy_resnet
-```
-
-To train on multiple GPUs, e.g. 8 GPUs, run the following command:
-
-```shell
-mim train mmsegmentation configs/fcn_dummy-r50-d8_4xb2-40k_cityscapes-512x1024.py --work-dir work_dirs/dummy_resnet --launcher pytorch --gpus 8
+mim train mmsegmentation configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py
 ```
 
 ### Testing commands
 
 ```shell
-mim test mmsegmentation configs/fcn_dummy-r50-d8_4xb2-40k_cityscapes-512x1024.py --work-dir work_dirs/dummy_resnet --checkpoint ${CHECKPOINT_PATH}
+mim test mmsegmentation configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py --checkpoint $CHECKPOINT_PATH
 ```
 
-> List the results as usually done in other model's README. \[Example\](https://github.com/open-mmlab/mmsegmentation/tree/main/configs/fcn#results-and-models
-> You should claim whether this is based on the pre-trained weights, which are converted from the official release; or it's a reproduced result obtained from retraining the model in this project
+### LEVIR-CD
 
-| Method | Backbone | Crop Size | Lr schd | Mem (GB) | Inf time (fps) |  mIoU | mIoU(ms+flip) | config                                                             | download                                                                                                                                                                                                                                                                                                                           |
-| ------ | -------- | --------- | ------: | -------- | -------------- | ----: | ------------: | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| FCN    | R-50-D8  | 512x1024  |   40000 | 5.7      | 4.17           | 72.25 |         73.36 | [config](configs/fcn_dummy-r50-d8_4xb2-40k_cityscapes-512x1024.py) | [model](https://download.openmmlab.com/mmsegmentation/v0.5/fcn/fcn_r50-d8_512x1024_40k_cityscapes/fcn_r50-d8_512x1024_40k_cityscapes_20200604_192608-efe53f0d.pth) \| [log](https://download.openmmlab.com/mmsegmentation/v0.5/fcn/fcn_r50-d8_512x1024_40k_cityscapes/fcn_r50-d8_512x1024_40k_cityscapes_20200604_192608.log.json) |
-
-## Citation
-
-> You may remove this section if not applicable.
-
-```bibtex
-@misc{mmseg2020,
-    title={{MMSegmentation}: OpenMMLab Semantic Segmentation Toolbox and Benchmark},
-    author={MMSegmentation Contributors},
-    howpublished = {\url{https://github.com/open-mmlab/mmsegmentation}},
-    year={2020}
-}
-```
+| Method  | Backbone | Crop Size | Lr schd | Mem (GB) | Inf time (fps) | mIoU  | mIoU(ms+flip) | config                                                                                | download                 |
+| ------- | -------- | --------- | ------- | -------- | -------------- | ----- | ------------- | ------------------------------------------------------------------------------------- | ------------------------ |
+| UPerNet | Swin-T   | 512x512   | 20000   | 5.518    | 12.61          | 83.78 | 84.4          | [config](configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py) | [model](<>) \| [log](<>) |
 
 ## Checklist
 
