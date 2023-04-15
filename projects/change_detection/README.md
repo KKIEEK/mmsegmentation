@@ -54,9 +54,9 @@ mim test mmsegmentation configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-2
 
 ### LEVIR-CD
 
-| Method  | Backbone | Crop Size | Lr schd | Mem (GB) | Inf time (fps) | mIoU  | mIoU(ms+flip) | config                                                                                | download                 |
-| ------- | -------- | --------- | ------- | -------- | -------------- | ----- | ------------- | ------------------------------------------------------------------------------------- | ------------------------ |
-| UPerNet | Swin-T   | 512x512   | 20000   | 5.518    | 12.61          | 83.78 | 84.4          | [config](configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py) | [model](<>) \| [log](<>) |
+| Method  | Backbone | Crop Size | Lr schd | Mem (GB) | Inf time (fps) | mIoU  | mIoU(flip) | config                                                                                | download                 |
+| ------- | -------- | --------- | ------- | -------- | -------------- | ----- | ---------- | ------------------------------------------------------------------------------------- | ------------------------ |
+| UPerNet | Swin-T   | 512x512   | 20000   | 18.915   |                | 85.18 | 85.33      | [config](configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py) | [model](<>) \| [log](<>) |
 
 ## Checklist
 

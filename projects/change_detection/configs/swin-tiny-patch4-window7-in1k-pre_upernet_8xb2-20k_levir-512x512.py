@@ -36,7 +36,7 @@ optim_wrapper = dict(
     _delete_=True,
     type='AmpOptimWrapper',
     optimizer=dict(
-        type='AdamW', lr=0.000015, betas=(0.9, 0.999), weight_decay=0.01),
+        type='AdamW', lr=0.00006, betas=(0.9, 0.999), weight_decay=0.01),
     paramwise_cfg=dict(
         custom_keys={
             'absolute_pos_embed': dict(decay_mult=0.),
