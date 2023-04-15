@@ -62,7 +62,7 @@ class UpConvBlock(nn.Module):
         assert plugins is None, 'Not implemented yet.'
 
         self.conv_block = conv_block(
-            in_channels=2 * skip_channels,
+            in_channels=skip_channels + out_channels,
             out_channels=out_channels,
             num_convs=num_convs,
             stride=stride,
@@ -77,14 +77,14 @@ class UpConvBlock(nn.Module):
             self.upsample = build_upsample_layer(
                 cfg=upsample_cfg,
                 in_channels=in_channels,
-                out_channels=skip_channels,
+                out_channels=out_channels,
                 with_cp=with_cp,
                 norm_cfg=norm_cfg,
                 act_cfg=act_cfg)
         else:
             self.upsample = ConvModule(
                 in_channels,
-                skip_channels,
+                out_channels,
                 kernel_size=1,
                 stride=1,
                 padding=0,
