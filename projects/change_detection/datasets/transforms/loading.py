@@ -53,7 +53,7 @@ class LoadImagePairFromFile(LoadImageFromFile):
         """Private function to load image.
 
         Args:
-            results (dict): Result dict from :obj:``mmcv.BaseCDDataset``.
+            results (dict): Result dict from :obj:``BaseCDDataset``.
 
         Returns:
             dict: The dict contains loaded image.
@@ -66,8 +66,7 @@ class LoadImagePairFromFile(LoadImageFromFile):
         """Functions to load image pair.
 
         Args:
-            results (dict): Result dict from
-                :class:`mmengine.dataset.BaseDataset`.
+            results (dict): Result dict from :class:`BaseCDDataset`.
 
         Returns:
             dict: The dict contains loaded image and meta information.

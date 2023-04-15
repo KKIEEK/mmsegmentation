@@ -10,10 +10,12 @@ This project implements a baseline for the bi-temporal change detection task, wh
 
 ### Prerequisites
 
-- Python 3.7
-- PyTorch 1.6 or higher
-- [MIM](https://github.com/open-mmlab/mim) v0.33 or higher
-- [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) v1.0.0rc2 or higher
+- Python 3.9
+- PyTorch 2.0
+- [MIM](https://github.com/open-mmlab/mim) v0.3.7 or higher
+- [MMCV](https://github.com/open-mmlab/mmcv) v2.0.0 or higher
+- [MMEngine](https://github.com/open-mmlab/mmengine) v0.7.2 or higher
+- [MMSegmentation](https://github.com/open-mmlab/mmsegmentation) v1.0.0 or higher
 
 ### Preparing dataset
 
@@ -59,6 +61,7 @@ mim test mmsegmentation configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-2
 | Method  | Backbone | Crop Size | Lr schd | Mem (GB) | Inf time (fps) | mIoU  | mIoU (flip) | config                                                                                | download                 |
 | ------- | -------- | --------- | ------- | -------- | -------------- | ----- | ----------- | ------------------------------------------------------------------------------------- | ------------------------ |
 | UPerNet | Swin-T   | 512x512   | 20000   | 18.915   |                | 85.18 | 85.33       | [config](configs/swin-tiny-patch4-window7-in1k-pre_upernet_8xb2-20k_levir-512x512.py) | [model](<>) \| [log](<>) |
+| UNet    | Swin-T   | 512x512   | 20000   | 18.777   |                | 85.05 | 85.55       | [config](configs/swin-tiny-patch4-window7-in1k-pre_unet_8xb2-20k_levir-512x512.py)    | [model](<>) \| [log](<>) |
 
 ## Checklist
 
