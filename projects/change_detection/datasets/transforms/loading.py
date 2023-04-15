@@ -33,7 +33,7 @@ class LoadImagePairFromFile(LoadImageFromFile):
         """Private function to load image.
 
         Args:
-            results (dict): Result dict from :obj:``mmcv.BaseDataset``.
+            results (dict): Result dict from :obj:``mmcv.BaseCDDataset``.
 
         Returns:
             dict: The dict contains loaded image.

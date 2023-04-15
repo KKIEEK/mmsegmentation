@@ -36,11 +36,12 @@ class ChangeDetector(EncoderDecoder):
     def extract_feat(self, inputs: Tensor) -> List[Tensor]:
         """Extract features from images."""
         xs = super().extract_feat(
-            # Convert (b, c, h, w) to (2*b, c/2, h, w)
+            # Convert (b, 2c, h, w) to (2b, c, h, w)
+            # for supporting activation checkpointing
             torch.cat(torch.chunk(inputs, 2, dim=1), dim=0))
 
         outs = list()
         for x in xs:
-            # Convert (2*b, c', h', w') to (b, c'*2, h', w')
+            # Convert (2b, c', h', w') to (b, 2c', h', w') back
             outs.append(torch.cat(torch.chunk(x, 2, dim=0), dim=1))
         return outs
